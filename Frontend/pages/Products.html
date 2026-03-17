@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papeleria - Productos</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">&#9998;</div>
+      <div>
+        <h2>Papeleria</h2>
+        <span>Sistema de Gesti&oacute;n</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="Home.html">
+        <span class="nav-icon">&#127968;</span> Inicio
+      </a>
+      <a href="Products.html" class="active">
+        <span class="nav-icon">&#128230;</span> Productos
+      </a>
+      <a href="cataloge.html">
+        <span class="nav-icon">&#128214;</span> Cat&aacute;logo
+      </a>
+      <a href="Ventas.html">
+        <span class="nav-icon">&#128176;</span> Ventas
+      </a>
+      <a href="Clientes.html">
+        <span class="nav-icon">&#128101;</span> Clientes
+      </a>
+      <a href="Reportes.html">
+        <span class="nav-icon">&#128202;</span> Reportes
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="Login.html" class="sidebar-logout">
+        <span class="nav-icon">&#128682;</span> Cerrar Sesi&oacute;n
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <h1>Productos</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <span>&#128269;</span>
+          <input type="text" placeholder="Buscar producto..." id="globalSearch">
+        </div>
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- ACTION BAR -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Gesti&oacute;n de Productos</h2>
+          <button class="btn btn-primary" id="btnAddProduct">
+            &#10010; Agregar Producto
+          </button>
+        </div>
+        <div class="section-body">
+
+          <!-- FILTERS -->
+          <div class="filter-bar">
+            <input type="text" class="form-control" placeholder="Buscar por nombre..." id="searchProduct">
+            <select class="form-control" id="filterCategory">
+              <option value="">Todas las categor&iacute;as</option>
+              <option value="Escritura">Escritura</option>
+              <option value="Cuadernos">Cuadernos</option>
+              <option value="Papel">Papel</option>
+              <option value="Oficina">Oficina</option>
+              <option value="Arte">Arte</option>
+              <option value="Tecnologia">Tecnolog&iacute;a</option>
+              <option value="Escolar">Escolar</option>
+            </select>
+            <select class="form-control" id="filterStock">
+              <option value="">Todo el stock</option>
+              <option value="available">En stock</option>
+              <option value="low">Stock bajo</option>
+              <option value="out">Sin stock</option>
+            </select>
+          </div>
+
+          <!-- TABLE -->
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Producto</th>
+                  <th>Categor&iacute;a</th>
+                  <th>Precio</th>
+                  <th>Stock</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="productsTableBody">
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL ADD/EDIT PRODUCT -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Agregar Producto</h3>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="productForm">
+          <input type="hidden" id="productId">
+          <div class="form-group">
+            <label for="productName">Nombre del producto</label>
+            <input type="text" class="form-control" id="productName" placeholder="Ej: L&aacute;piz HB" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productCategory">Categor&iacute;a</label>
+              <select class="form-control" id="productCategory" required>
+                <option value="">Seleccionar...</option>
+                <option value="Escritura">Escritura</option>
+                <option value="Cuadernos">Cuadernos</option>
+                <option value="Papel">Papel</option>
+                <option value="Oficina">Oficina</option>
+                <option value="Arte">Arte</option>
+                <option value="Tecnologia">Tecnolog&iacute;a</option>
+                <option value="Escolar">Escolar</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="productPrice">Precio ($)</label>
+              <input type="number" class="form-control" id="productPrice" placeholder="0.00" step="0.01" min="0" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productStock">Cantidad en stock</label>
+              <input type="number" class="form-control" id="productStock" placeholder="0" min="0" required>
+            </div>
+            <div class="form-group">
+              <label for="productMinStock">Stock m&iacute;nimo</label>
+              <input type="number" class="form-control" id="productMinStock" placeholder="5" min="0" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="productDescription">Descripci&oacute;n</label>
+            <textarea class="form-control" id="productDescription" rows="3" placeholder="Descripci&oacute;n del producto..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelProduct">Cancelar</button>
+        <button class="btn btn-primary" id="btnSaveProduct">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRM DELETE -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3>Confirmar Eliminaci&oacute;n</h3>
+        <button class="modal-close" id="deleteModalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>&iquest;Est&aacute;s seguro de que deseas eliminar <strong id="deleteProductName"></strong>?</p>
+        <p style="color: var(--gray-500); font-size: 13px; margin-top: 8px;">Esta acci&oacute;n no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelDelete">Cancelar</button>
+        <button class="btn btn-danger" id="btnConfirmDelete">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init('products');
+    });
+  </script>
+</body>
+</html>

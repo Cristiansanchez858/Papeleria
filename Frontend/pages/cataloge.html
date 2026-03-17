@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papeleria - Cat&aacute;logo</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">&#9998;</div>
+      <div>
+        <h2>Papeleria</h2>
+        <span>Sistema de Gesti&oacute;n</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="Home.html">
+        <span class="nav-icon">&#127968;</span> Inicio
+      </a>
+      <a href="Products.html">
+        <span class="nav-icon">&#128230;</span> Productos
+      </a>
+      <a href="cataloge.html" class="active">
+        <span class="nav-icon">&#128214;</span> Cat&aacute;logo
+      </a>
+      <a href="Ventas.html">
+        <span class="nav-icon">&#128176;</span> Ventas
+      </a>
+      <a href="Clientes.html">
+        <span class="nav-icon">&#128101;</span> Clientes
+      </a>
+      <a href="Reportes.html">
+        <span class="nav-icon">&#128202;</span> Reportes
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="Login.html" class="sidebar-logout">
+        <span class="nav-icon">&#128682;</span> Cerrar Sesi&oacute;n
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <h1>Cat&aacute;logo</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <span>&#128269;</span>
+          <input type="text" placeholder="Buscar en cat&aacute;logo..." id="globalSearch">
+        </div>
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- FILTERS -->
+      <div class="filter-bar">
+        <input type="text" class="form-control" placeholder="Buscar producto..." id="catalogSearch">
+        <select class="form-control" id="catalogCategory">
+          <option value="">Todas las categor&iacute;as</option>
+          <option value="Escritura">Escritura</option>
+          <option value="Cuadernos">Cuadernos</option>
+          <option value="Papel">Papel</option>
+          <option value="Oficina">Oficina</option>
+          <option value="Arte">Arte</option>
+          <option value="Tecnologia">Tecnolog&iacute;a</option>
+          <option value="Escolar">Escolar</option>
+        </select>
+        <select class="form-control" id="catalogSort">
+          <option value="name-asc">Nombre A-Z</option>
+          <option value="name-desc">Nombre Z-A</option>
+          <option value="price-asc">Precio menor a mayor</option>
+          <option value="price-desc">Precio mayor a menor</option>
+          <option value="stock-desc">Mayor stock</option>
+        </select>
+      </div>
+
+      <!-- CATALOG GRID -->
+      <div class="catalog-grid" id="catalogGrid">
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state" id="catalogEmpty" style="display:none;">
+        <div class="empty-icon">&#128270;</div>
+        <p>No se encontraron productos con los filtros seleccionados.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init('catalog');
+    });
+  </script>
+</body>
+</html>

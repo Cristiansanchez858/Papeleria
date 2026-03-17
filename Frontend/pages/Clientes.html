@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papeleria - Clientes</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">&#9998;</div>
+      <div>
+        <h2>Papeleria</h2>
+        <span>Sistema de Gesti&oacute;n</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="Home.html">
+        <span class="nav-icon">&#127968;</span> Inicio
+      </a>
+      <a href="Products.html">
+        <span class="nav-icon">&#128230;</span> Productos
+      </a>
+      <a href="cataloge.html">
+        <span class="nav-icon">&#128214;</span> Cat&aacute;logo
+      </a>
+      <a href="Ventas.html">
+        <span class="nav-icon">&#128176;</span> Ventas
+      </a>
+      <a href="Clientes.html" class="active">
+        <span class="nav-icon">&#128101;</span> Clientes
+      </a>
+      <a href="Reportes.html">
+        <span class="nav-icon">&#128202;</span> Reportes
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="Login.html" class="sidebar-logout">
+        <span class="nav-icon">&#128682;</span> Cerrar Sesi&oacute;n
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <h1>Clientes</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <span>&#128269;</span>
+          <input type="text" placeholder="Buscar cliente..." id="globalSearch">
+        </div>
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">&#128101;</div>
+          <div class="stat-info">
+            <h3 id="statTotalClients">0</h3>
+            <p>Total Clientes</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">&#128176;</div>
+          <div class="stat-info">
+            <h3 id="statTotalClientSales">$0</h3>
+            <p>Total en Ventas</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon yellow">&#11088;</div>
+          <div class="stat-info">
+            <h3 id="statTopClient">-</h3>
+            <p>Mejor Cliente</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLIENTS TABLE -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Gesti&oacute;n de Clientes</h2>
+          <button class="btn btn-primary" id="btnAddClient">
+            &#10010; Agregar Cliente
+          </button>
+        </div>
+        <div class="section-body">
+
+          <div class="filter-bar">
+            <input type="text" class="form-control" placeholder="Buscar por nombre o email..." id="searchClient">
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Tel&eacute;fono</th>
+                  <th>Compras</th>
+                  <th>Total Gastado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="clientsTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL ADD/EDIT CLIENT -->
+  <div class="modal-overlay" id="clientModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="clientModalTitle">Agregar Cliente</h3>
+        <button class="modal-close" id="clientModalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="clientForm">
+          <input type="hidden" id="clientId">
+          <div class="form-group">
+            <label for="clientName">Nombre completo</label>
+            <input type="text" class="form-control" id="clientName" placeholder="Nombre del cliente" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="clientEmail">Email</label>
+              <input type="email" class="form-control" id="clientEmail" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+              <label for="clientPhone">Tel&eacute;fono</label>
+              <input type="tel" class="form-control" id="clientPhone" placeholder="(555) 123-4567">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="clientAddress">Direcci&oacute;n</label>
+            <input type="text" class="form-control" id="clientAddress" placeholder="Direcci&oacute;n del cliente">
+          </div>
+          <div class="form-group">
+            <label for="clientNotes">Notas</label>
+            <textarea class="form-control" id="clientNotes" rows="2" placeholder="Notas adicionales..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelClient">Cancelar</button>
+        <button class="btn btn-primary" id="btnSaveClient">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRM DELETE CLIENT -->
+  <div class="modal-overlay" id="deleteClientModal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3>Confirmar Eliminaci&oacute;n</h3>
+        <button class="modal-close" id="deleteClientModalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>&iquest;Est&aacute;s seguro de que deseas eliminar a <strong id="deleteClientName"></strong>?</p>
+        <p style="color: var(--gray-500); font-size: 13px; margin-top: 8px;">Se eliminar&aacute; el cliente y su historial.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelDeleteClient">Cancelar</button>
+        <button class="btn btn-danger" id="btnConfirmDeleteClient">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init('clients');
+    });
+  </script>
+</body>
+</html>

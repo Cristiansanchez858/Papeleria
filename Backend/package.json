@@ -1,0 +1,16 @@
+{
+  "name": "papeleria-backend",
+  "version": "1.0.0",
+  "description": "Backend del Sistema de Gestion para Papeleria - MySQL",
+  "main": "servidor/server.js",
+  "scripts": {
+    "start": "node servidor/server.js",
+    "dev": "node servidor/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}

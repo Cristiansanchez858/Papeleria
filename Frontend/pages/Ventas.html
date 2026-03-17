@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papeleria - Ventas</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">&#9998;</div>
+      <div>
+        <h2>Papeleria</h2>
+        <span>Sistema de Gesti&oacute;n</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="Home.html">
+        <span class="nav-icon">&#127968;</span> Inicio
+      </a>
+      <a href="Products.html">
+        <span class="nav-icon">&#128230;</span> Productos
+      </a>
+      <a href="cataloge.html">
+        <span class="nav-icon">&#128214;</span> Cat&aacute;logo
+      </a>
+      <a href="Ventas.html" class="active">
+        <span class="nav-icon">&#128176;</span> Ventas
+      </a>
+      <a href="Clientes.html">
+        <span class="nav-icon">&#128101;</span> Clientes
+      </a>
+      <a href="Reportes.html">
+        <span class="nav-icon">&#128202;</span> Reportes
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="Login.html" class="sidebar-logout">
+        <span class="nav-icon">&#128682;</span> Cerrar Sesi&oacute;n
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <h1>Punto de Venta</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+      <div class="pos-layout">
+
+        <!-- LEFT: Product selection -->
+        <div class="pos-products">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Seleccionar Productos</h2>
+            </div>
+            <div class="section-body">
+              <div class="filter-bar">
+                <input type="text" class="form-control" placeholder="Buscar producto..." id="posSearch">
+                <select class="form-control" id="posCategory">
+                  <option value="">Todas</option>
+                  <option value="Escritura">Escritura</option>
+                  <option value="Cuadernos">Cuadernos</option>
+                  <option value="Papel">Papel</option>
+                  <option value="Oficina">Oficina</option>
+                  <option value="Arte">Arte</option>
+                  <option value="Tecnologia">Tecnolog&iacute;a</option>
+                  <option value="Escolar">Escolar</option>
+                </select>
+              </div>
+              <div class="pos-product-grid" id="posProductGrid">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Cart -->
+        <div class="pos-cart">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Carrito de Venta</h2>
+              <button class="btn btn-danger btn-sm" id="btnClearCart">Vaciar</button>
+            </div>
+            <div class="section-body">
+
+              <!-- Client selection -->
+              <div class="form-group">
+                <label>Cliente</label>
+                <select class="form-control" id="posClient">
+                  <option value="">Cliente general</option>
+                </select>
+              </div>
+
+              <!-- Cart items -->
+              <div class="cart-items" id="cartItems">
+                <div class="empty-state" id="cartEmpty">
+                  <div class="empty-icon">&#128722;</div>
+                  <p>Agrega productos al carrito</p>
+                </div>
+              </div>
+
+              <!-- Cart totals -->
+              <div class="cart-totals" id="cartTotals" style="display:none;">
+                <div class="cart-total-row">
+                  <span>Subtotal:</span>
+                  <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="cart-total-row">
+                  <span>IVA (16%):</span>
+                  <span id="cartTax">$0.00</span>
+                </div>
+                <div class="cart-total-row total">
+                  <span>Total:</span>
+                  <span id="cartTotal">$0.00</span>
+                </div>
+                <button class="btn btn-success btn-block" id="btnCompleteSale" style="margin-top:16px;">
+                  &#10004; Completar Venta
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RECENT SALES -->
+      <div class="section-card" style="margin-top: 24px;">
+        <div class="section-header">
+          <h2>Ventas Recientes</h2>
+        </div>
+        <div class="section-body">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID Venta</th>
+                  <th>Fecha</th>
+                  <th>Cliente</th>
+                  <th>Productos</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="recentSalesTable">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init('sales');
+    });
+  </script>
+</body>
+</html>

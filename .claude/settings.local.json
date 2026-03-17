@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"c:/Users/maria/Escritorio/Ia\" -type f ! -path \"*/.git/*\" -exec ls -lh {} ;)"
+    ]
+  }
+}

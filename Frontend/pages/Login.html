@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papeleria - Iniciar Sesi&oacute;n</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="login-body">
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">&#9998;</div>
+        <h1>Papeleria</h1>
+        <p>Sistema de Gesti&oacute;n</p>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="loginUser">Usuario</label>
+          <input type="text" class="form-control" id="loginUser" placeholder="Ingresa tu usuario" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Contrase&ntilde;a</label>
+          <input type="password" class="form-control" id="loginPassword" placeholder="Ingresa tu contrase&ntilde;a" required>
+        </div>
+        <div class="login-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="rememberMe"> Recordarme
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Iniciar Sesi&oacute;n</button>
+        <p class="login-hint" id="loginError" style="display:none;"></p>
+      </form>
+
+      <div class="login-footer">
+        <p>Credenciales de prueba:</p>
+        <p><strong>Usuario:</strong> admin &nbsp; <strong>Contrase&ntilde;a:</strong> admin123</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init('login');
+    });
+  </script>
+</body>
+</html>

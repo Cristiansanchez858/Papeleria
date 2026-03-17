@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papeleria - Reportes</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">&#9998;</div>
+      <div>
+        <h2>Papeleria</h2>
+        <span>Sistema de Gesti&oacute;n</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="Home.html">
+        <span class="nav-icon">&#127968;</span> Inicio
+      </a>
+      <a href="Products.html">
+        <span class="nav-icon">&#128230;</span> Productos
+      </a>
+      <a href="cataloge.html">
+        <span class="nav-icon">&#128214;</span> Cat&aacute;logo
+      </a>
+      <a href="Ventas.html">
+        <span class="nav-icon">&#128176;</span> Ventas
+      </a>
+      <a href="Clientes.html">
+        <span class="nav-icon">&#128101;</span> Clientes
+      </a>
+      <a href="Reportes.html" class="active">
+        <span class="nav-icon">&#128202;</span> Reportes
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="Login.html" class="sidebar-logout">
+        <span class="nav-icon">&#128682;</span> Cerrar Sesi&oacute;n
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <h1>Reportes</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- SUMMARY STATS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon green">&#128176;</div>
+          <div class="stat-info">
+            <h3 id="reportTotalRevenue">$0</h3>
+            <p>Ingresos Totales</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">&#128722;</div>
+          <div class="stat-info">
+            <h3 id="reportTotalSales">0</h3>
+            <p>Total Ventas</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon yellow">&#128230;</div>
+          <div class="stat-info">
+            <h3 id="reportProductsSold">0</h3>
+            <p>Productos Vendidos</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red">&#128200;</div>
+          <div class="stat-info">
+            <h3 id="reportAvgSale">$0</h3>
+            <p>Promedio por Venta</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SALES CHART -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Ventas por D&iacute;a</h2>
+        </div>
+        <div class="chart-container">
+          <div class="chart-bar-group" id="salesChart"></div>
+        </div>
+      </div>
+
+      <div class="report-grid">
+        <!-- TOP PRODUCTS -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Productos M&aacute;s Vendidos</h2>
+          </div>
+          <div class="section-body">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Vendidos</th>
+                    <th>Ingresos</th>
+                  </tr>
+                </thead>
+                <tbody id="topProductsTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOP CLIENTS -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Mejores Clientes</h2>
+          </div>
+          <div class="section-body">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Compras</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="topClientsTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOW STOCK ALERT -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Alerta de Stock Bajo</h2>
+        </div>
+        <div class="section-body">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Categor&iacute;a</th>
+                  <th>Stock Actual</th>
+                  <th>Stock M&iacute;nimo</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="lowStockTable">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALL SALES HISTORY -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Historial Completo de Ventas</h2>
+        </div>
+        <div class="section-body">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Fecha</th>
+                  <th>Cliente</th>
+                  <th>Productos</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="allSalesTable">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init('reports');
+    });
+  </script>
+</body>
+</html>

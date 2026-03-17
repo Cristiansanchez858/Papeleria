@@ -100,14 +100,48 @@
         </div>
       </div>
 
-      <!-- CHART SECTION -->
-      <div class="section-card">
-        <div class="section-header">
-          <h2>Productos por Categor&iacute;a</h2>
+      <!-- ROW 2: CHART + RESUMEN RÁPIDO -->
+      <div class="home-row-2">
+
+        <!-- CHART: PRODUCTOS POR CATEGORÍA (barras horizontales) -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Productos por Categor&iacute;a</h2>
+          </div>
+          <div class="section-body" style="padding: 16px;">
+            <div id="categoryChart" class="hbar-chart"></div>
+          </div>
         </div>
-        <div class="chart-container">
-          <div class="chart-bar-group" id="categoryChart"></div>
+
+        <!-- RESUMEN RÁPIDO -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Resumen R&aacute;pido</h2>
+          </div>
+          <div class="section-body quick-summary-grid">
+            <div class="quick-stat">
+              <p class="qs-label">Productos disponibles</p>
+              <h3 class="qs-value" id="qsAvailable">0</h3>
+              <p class="qs-sub" id="qsAvailableSub">de 0 en total</p>
+            </div>
+            <div class="quick-stat">
+              <p class="qs-label">Sin stock</p>
+              <h3 class="qs-value" id="qsOutOfStock">0</h3>
+              <p class="qs-sub">requiere reposici&oacute;n</p>
+            </div>
+            <div class="quick-stat">
+              <p class="qs-label">Precio promedio</p>
+              <h3 class="qs-value" id="qsAvgPrice">$0</h3>
+              <p class="qs-sub">por producto</p>
+            </div>
+            <div class="quick-stat">
+              <p class="qs-label">Categor&iacute;as activas</p>
+              <h3 class="qs-value" id="qsCategories">0</h3>
+              <p class="qs-sub">l&iacute;neas de producto</p>
+            </div>
+          </div>
         </div>
+
       </div>
 
       <!-- RECENT PRODUCTS -->
@@ -138,10 +172,205 @@
     </div>
   </div>
 
+  <!-- EXTRA STYLES FOR NEW HOME LAYOUT -->
+  <style>
+    /* ── Row 2: chart + resumen side by side ── */
+    .home-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 860px) {
+      .home-row-2 { grid-template-columns: 1fr; }
+    }
+
+    /* ── Horizontal bar chart ── */
+    .hbar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .hbar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hbar-label {
+      font-size: 12px;
+      color: var(--color-text, #555);
+      width: 200px;
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hbar-track {
+      flex: 1;
+      height: 10px;
+      background: #f1f3f5;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .hbar-fill {
+      height: 10px;
+      border-radius: 5px;
+      transition: width 0.4s ease;
+    }
+    .hbar-count {
+      font-size: 12px;
+      font-weight: 500;
+      width: 20px;
+      text-align: right;
+      color: var(--color-text, #333);
+    }
+
+    /* ── Quick summary grid ── */
+    .quick-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 16px;
+    }
+    .quick-stat {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .qs-label {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .qs-value {
+      font-size: 22px;
+      font-weight: 600;
+      color: #1a1a2e;
+      line-height: 1.1;
+    }
+    .qs-sub {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 3px;
+    }
+  </style>
+
   <script src="../app.js"></script>
   <script>
+    /* ─────────────────────────────────────────────
+       CATEGORY NAME MAPPING
+       Rename old categories to the new ones here.
+    ───────────────────────────────────────────── */
+    const CATEGORY_MAP = {
+      'Arte':      'Arte, Manualidades y Dise\u00f1o',
+      'Oficina':   'Oficina y Administrativa',
+      'Escritura': 'Escolar y de Escritura',
+      // Add more mappings as needed:
+      // 'Tecnologia': 'Tecnolog\u00eda',
+    };
+
+    function mapCategory(cat) {
+      return CATEGORY_MAP[cat] || cat;
+    }
+
+    /* ─────────────────────────────────────────────
+       HORIZONTAL BAR CHART
+    ───────────────────────────────────────────── */
+    const BAR_COLORS = [
+      '#3b82f6', // blue
+      '#8b5cf6', // purple
+      '#f59e0b', // amber
+      '#10b981', // green
+      '#06b6d4', // cyan
+      '#ec4899', // pink
+      '#f97316', // orange
+    ];
+
+    function renderHBarChart(counts) {
+      const container = document.getElementById('categoryChart');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const entries = Object.entries(counts);
+      const max = Math.max(...entries.map(e => e[1]), 1);
+
+      entries.forEach(([cat, count], i) => {
+        const pct = Math.round((count / max) * 100);
+        const color = BAR_COLORS[i % BAR_COLORS.length];
+
+        const row = document.createElement('div');
+        row.className = 'hbar-row';
+        row.innerHTML = `
+          <span class="hbar-label" title="${cat}">${cat}</span>
+          <div class="hbar-track">
+            <div class="hbar-fill" style="width:${pct}%;background:${color};"></div>
+          </div>
+          <span class="hbar-count">${count}</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    /* ─────────────────────────────────────────────
+       QUICK SUMMARY
+    ───────────────────────────────────────────── */
+    function renderQuickSummary(products) {
+      const total    = products.length;
+      const avail    = products.filter(p => (p.stock || p.cantidad || 0) > 5).length;
+      const noStock  = products.filter(p => (p.stock || p.cantidad || 0) === 0).length;
+      const avgPrice = total
+        ? (products.reduce((s, p) => s + parseFloat(p.precio || p.price || 0), 0) / total)
+        : 0;
+      const cats     = new Set(products.map(p => mapCategory(p.categoria || p.category || ''))).size;
+
+      const el = id => document.getElementById(id);
+      if (el('qsAvailable'))    el('qsAvailable').textContent    = avail;
+      if (el('qsAvailableSub')) el('qsAvailableSub').textContent = `de ${total} en total`;
+      if (el('qsOutOfStock'))   el('qsOutOfStock').textContent   = noStock;
+      if (el('qsAvgPrice'))     el('qsAvgPrice').textContent     = '$' + avgPrice.toFixed(2);
+      if (el('qsCategories'))   el('qsCategories').textContent   = cats;
+    }
+
+    /* ─────────────────────────────────────────────
+       PATCH: intercept App.init to hook extra render
+       (works whether app.js uses localStorage or fetch)
+    ───────────────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', () => {
       App.init('home');
+
+      // Give app.js a tick to populate data, then render extras
+      setTimeout(() => {
+        try {
+          // Try to read products from localStorage (common pattern)
+          const raw = localStorage.getItem('products') || localStorage.getItem('papeleria_products') || '[]';
+          const products = JSON.parse(raw);
+
+          if (products.length) {
+            // Build mapped category counts
+            const counts = {};
+            products.forEach(p => {
+              const cat = mapCategory(p.categoria || p.category || 'Sin categor\u00eda');
+              counts[cat] = (counts[cat] || 0) + 1;
+            });
+            renderHBarChart(counts);
+            renderQuickSummary(products);
+
+            // Also patch the recent products table to use mapped category names
+            const tbody = document.getElementById('recentProductsTable');
+            if (tbody) {
+              tbody.querySelectorAll('tr').forEach(tr => {
+                const cells = tr.querySelectorAll('td');
+                // Category is typically the 2nd column (index 1)
+                if (cells[1]) {
+                  const original = cells[1].textContent.trim();
+                  cells[1].textContent = mapCategory(original);
+                }
+              });
+            }
+          }
+        } catch (e) {
+          console.warn('Home extras: could not read products', e);
+        }
+      }, 300);
     });
   </script>
 </body>

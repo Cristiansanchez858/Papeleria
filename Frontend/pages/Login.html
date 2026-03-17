@@ -1,50 +1,209 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Papeleria - Iniciar Sesi&oacute;n</title>
+  <title>Papeleria - Iniciar Sesión</title>
+  <!-- ⚠️ NO cambiar la ruta del CSS — debe apuntar a css/styles.css
+       relativo a donde esté este archivo HTML -->
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="login-body">
+  <!--
+    .login-body aplica el fondo degradado morado.
+    ⚠️ NO quitar esa clase del <body>.
+  -->
 
   <div class="login-container">
     <div class="login-card">
+
+      <!-- ENCABEZADO con logo y título -->
       <div class="login-header">
-        <div class="login-logo">&#9998;</div>
+        <div class="login-logo">&#9998;</div> <!-- ✎ ícono de lápiz -->
         <h1>Papeleria</h1>
-        <p>Sistema de Gesti&oacute;n</p>
+        <p>Sistema de Gestión</p>
       </div>
 
-      <form id="loginForm" class="login-form">
-        <div class="form-group">
-          <label for="loginUser">Usuario</label>
-          <input type="text" class="form-control" id="loginUser" placeholder="Ingresa tu usuario" required>
-        </div>
-        <div class="form-group">
-          <label for="loginPassword">Contrase&ntilde;a</label>
-          <input type="password" class="form-control" id="loginPassword" placeholder="Ingresa tu contrase&ntilde;a" required>
-        </div>
-        <div class="login-options">
-          <label class="checkbox-label">
-            <input type="checkbox" id="rememberMe"> Recordarme
-          </label>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Iniciar Sesi&oacute;n</button>
-        <p class="login-hint" id="loginError" style="display:none;"></p>
-      </form>
-
-      <div class="login-footer">
-        <p>Credenciales de prueba:</p>
-        <p><strong>Usuario:</strong> admin &nbsp; <strong>Contrase&ntilde;a:</strong> admin123</p>
+      <!--
+        PESTAÑAS DE ROL
+        Cada botón llama a switchRole('admin') o switchRole('employee').
+        La función JS alterna las clases .active entre las pestañas
+        y entre los paneles de formulario.
+      -->
+      <div class="role-tabs">
+        <button class="role-tab active" id="tabAdmin" onclick="switchRole('admin')">
+          &#128737; Administrador
+        </button>
+        <button class="role-tab" id="tabEmployee" onclick="switchRole('employee')">
+          &#128100; Empleado
+        </button>
       </div>
-    </div>
-  </div>
 
+      <!-- ─────────────────────────────────────
+           PANEL ADMINISTRADOR
+           .role-panel.active = visible
+           .role-panel (sin .active) = oculto
+      ───────────────────────────────────── -->
+      <div class="role-panel active" id="panelAdmin">
+        <form id="loginFormAdmin" class="login-form">
+
+          <div class="form-group">
+            <label for="adminUser">Usuario</label>
+            <input type="text" class="form-control" id="adminUser"
+              placeholder="Ingresa tu usuario" required>
+          </div>
+
+          <div class="form-group">
+            <label for="adminPassword">Contraseña</label>
+            <input type="password" class="form-control" id="adminPassword"
+              placeholder="Ingresa tu contraseña" required>
+          </div>
+
+          <div class="login-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="rememberAdmin"> Recordarme
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            &#128737;&nbsp; Entrar como Administrador
+          </button>
+
+          <!-- Mensaje de error — se muestra solo si las credenciales son incorrectas -->
+          <p class="login-hint" id="adminError" style="display:none;"></p>
+        </form>
+
+        <!-- Credenciales visibles para facilitar las pruebas -->
+        <div class="login-footer">
+          <p>Credenciales de prueba:</p>
+          <p><strong>Usuario:</strong> admin &nbsp; <strong>Contraseña:</strong> admin123</p>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────
+           PANEL EMPLEADO
+           Mismo esquema que el panel de admin,
+           con IDs diferentes para no colisionar.
+      ───────────────────────────────────── -->
+      <div class="role-panel" id="panelEmployee">
+        <form id="loginFormEmployee" class="login-form">
+
+          <div class="form-group">
+            <label for="empUser">Usuario</label>
+            <input type="text" class="form-control" id="empUser"
+              placeholder="Ingresa tu usuario de empleado" required>
+          </div>
+
+          <div class="form-group">
+            <label for="empPassword">Contraseña</label>
+            <input type="password" class="form-control" id="empPassword"
+              placeholder="Ingresa tu contraseña" required>
+          </div>
+
+          <div class="login-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="rememberEmp"> Recordarme
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            &#128100;&nbsp; Entrar como Empleado
+          </button>
+
+          <p class="login-hint" id="empError" style="display:none;"></p>
+        </form>
+
+        <div class="login-footer">
+          <p>Credenciales de prueba:</p>
+          <p><strong>Usuario:</strong> empleado &nbsp; <strong>Contraseña:</strong> emp123</p>
+        </div>
+      </div>
+
+    </div><!-- /login-card -->
+  </div><!-- /login-container -->
+
+  <!--
+    ⚠️ NO mover app.js — debe cargarse antes del script
+    de abajo para que App esté disponible.
+  -->
   <script src="../app.js"></script>
   <script>
+    /* ─────────────────────────────────────────────────
+       switchRole(role)
+       Alterna visibilidad entre los dos paneles y
+       el estilo activo de las pestañas.
+       Se llama desde los onclick de .role-tab.
+    ───────────────────────────────────────────────── */
+    function switchRole(role) {
+      // Quitar .active de todas las pestañas y paneles
+      document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.role-panel').forEach(p => p.classList.remove('active'));
+
+      if (role === 'admin') {
+        document.getElementById('tabAdmin').classList.add('active');
+        document.getElementById('panelAdmin').classList.add('active');
+      } else {
+        document.getElementById('tabEmployee').classList.add('active');
+        document.getElementById('panelEmployee').classList.add('active');
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      App.init('login');
+
+      /* ───────────────────────────────────────────
+         LOGIN ADMINISTRADOR
+         Compara usuario/contraseña con valores fijos.
+         En producción esto debería hacerse en el servidor.
+
+         Al entrar correctamente guarda en sessionStorage:
+           - userRole: 'admin'
+           - userName: 'Admin'
+         Estas claves las lee Reportes.html para mostrar
+         el nombre en el topbar.
+      ─────────────────────────────────────────── */
+      document.getElementById('loginFormAdmin').addEventListener('submit', function(e) {
+        e.preventDefault(); // evitar recarga de página
+
+        const user = document.getElementById('adminUser').value.trim();
+        const pass = document.getElementById('adminPassword').value.trim();
+        const err  = document.getElementById('adminError');
+
+        if (user === 'admin' && pass === 'admin123') {
+          sessionStorage.setItem('userRole', 'admin');
+          sessionStorage.setItem('userName', 'Admin');
+          window.location.href = 'Home.html'; // redirigir al inicio
+        } else {
+          err.textContent = '⚠️ Usuario o contraseña incorrectos.';
+          err.style.display = 'block';
+        }
+      });
+
+      /* ───────────────────────────────────────────
+         LOGIN EMPLEADO
+         Mismo flujo que admin, con rol 'employee'.
+         Puedes agregar más empleados ampliando la
+         condición o consultando un arreglo de usuarios.
+      ─────────────────────────────────────────── */
+      document.getElementById('loginFormEmployee').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const user = document.getElementById('empUser').value.trim();
+        const pass = document.getElementById('empPassword').value.trim();
+        const err  = document.getElementById('empError');
+
+        if (user === 'empleado' && pass === 'emp123') {
+          sessionStorage.setItem('userRole', 'employee');
+          sessionStorage.setItem('userName', 'Empleado');
+          window.location.href = 'Home.html';
+        } else {
+          err.textContent = '⚠️ Usuario o contraseña incorrectos.';
+          err.style.display = 'block';
+        }
+      });
+
+      // Inicializar app.js si está disponible
+      if (typeof App !== 'undefined') App.init('login');
     });
   </script>
 </body>
